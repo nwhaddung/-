@@ -52,17 +52,17 @@
       background-color: #fff7ff;
     }
     .name-col {
-      width: 45%;
+      width: 40%;
     }
     .price-col {
       width: 13%;
       text-align: right;
     }
     .option-col {
-      width: 22%;
+      width: 27%;
     }
     .qty-col {
-      width: 12%;
+      width: 20%;
       text-align: center;
     }
     select, input[type="number"] {
@@ -77,12 +77,35 @@
     input[type="number"] {
       text-align: center;
     }
+    .qty-wrapper {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
+    }
+    .qty-wrapper input[type="number"] {
+      flex: 0 0 50%;
+    }
+    .save-option-btn {
+      flex: 0 0 auto;
+      padding: 4px 8px;
+      font-size: 11px;
+      border-radius: 999px;
+      border: none;
+      background-color: #ffd2f0;
+      color: #4b3b60;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .save-option-btn:hover {
+      background-color: #ffe0f4;
+    }
     .btn-area {
       text-align: center;
       margin-top: 16px;
       margin-bottom: 8px;
     }
-    button {
+    button.calc-btn {
       background-color: #ffbde3;
       color: #4b3b60;
       border: none;
@@ -94,12 +117,12 @@
       box-shadow: 0 4px 10px rgba(255, 130, 190, 0.5);
       transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.12s ease;
     }
-    button:hover {
+    button.calc-btn:hover {
       background-color: #ffc9ea;
       transform: translateY(-1px);
       box-shadow: 0 6px 14px rgba(255, 130, 190, 0.6);
     }
-    button:active {
+    button.calc-btn:active {
       transform: translateY(1px);
       box-shadow: 0 3px 7px rgba(255, 130, 190, 0.5);
     }
@@ -128,13 +151,88 @@
       color: #8f7fb0;
       margin-top: 14px;
     }
+
+    /* 임시 저장된 옵션 영역 */
+    .saved-options-box {
+      margin-top: 18px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background-color: #fdf2ff;
+      border: 1px solid #e3c4ff;
+      font-size: 11px;
+    }
+    .saved-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #6a4a8c;
+    }
+    .saved-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .saved-option-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 4px 8px;
+      border: 1px solid #f0d7ff;
+    }
+    .saved-option-text {
+      font-size: 11px;
+    }
+    .delete-option-btn {
+      border: none;
+      background-color: #ffd6e0;
+      color: #5b3b4b;
+      font-size: 10px;
+      border-radius: 999px;
+      padding: 3px 8px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .delete-option-btn:hover {
+      background-color: #ffebf0;
+    }
+    .saved-empty {
+      color: #b09acc;
+      font-style: italic;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        margin: 10px;
+        padding: 14px 12px 18px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      .subtitle {
+        font-size: 12px;
+      }
+      table {
+        font-size: 11px;
+      }
+      .qty-wrapper {
+        flex-direction: column;
+      }
+      .qty-wrapper input[type="number"] {
+        width: 100%;
+      }
+      .save-option-btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>PLBBUU OFFICIAL MD 계산기</h1>
     <div class="subtitle">
-      원하는 상품의 옵션과 수량을 입력한 뒤 <b>계산하기</b> 버튼을 눌러 주세요.
+      옵션(멤버/디자인)과 수량을 입력 후 <b>추가(임시저장)</b> 버튼으로 여러 조합을 저장하고,<br>
+      마지막에 <b>계산하기</b>를 눌러 총 금액을 확인하세요.
     </div>
 
     <table>
@@ -143,7 +241,7 @@
           <th class="name-col">상품명</th>
           <th class="price-col">가격(원)</th>
           <th class="option-col">옵션 (멤버/디자인)</th>
-          <th class="qty-col">수량</th>
+          <th class="qty-col">수량 / 임시저장</th>
         </tr>
       </thead>
       <tbody>
@@ -192,7 +290,10 @@
             </select>
           </td>
           <td class="qty-col">
-            <input type="number" min="0" value="0" class="qty-input">
+            <div class="qty-wrapper">
+              <input type="number" min="0" value="0" class="qty-input">
+              <button type="button" class="save-option-btn">추가</button>
+            </div>
           </td>
         </tr>
 
@@ -214,7 +315,10 @@
             </select>
           </td>
           <td class="qty-col">
-            <input type="number" min="0" value="0" class="qty-input">
+            <div class="qty-wrapper">
+              <input type="number" min="0" value="0" class="qty-input">
+              <button type="button" class="save-option-btn">추가</button>
+            </div>
           </td>
         </tr>
 
@@ -236,7 +340,10 @@
             </select>
           </td>
           <td class="qty-col">
-            <input type="number" min="0" value="0" class="qty-input">
+            <div class="qty-wrapper">
+              <input type="number" min="0" value="0" class="qty-input">
+              <button type="button" class="save-option-btn">추가</button>
+            </div>
           </td>
         </tr>
 
@@ -281,7 +388,10 @@
             </select>
           </td>
           <td class="qty-col">
-            <input type="number" min="0" value="0" class="qty-input">
+            <div class="qty-wrapper">
+              <input type="number" min="0" value="0" class="qty-input">
+              <button type="button" class="save-option-btn">추가</button>
+            </div>
           </td>
         </tr>
 
@@ -303,7 +413,10 @@
             </select>
           </td>
           <td class="qty-col">
-            <input type="number" min="0" value="0" class="qty-input">
+            <div class="qty-wrapper">
+              <input type="number" min="0" value="0" class="qty-input">
+              <button type="button" class="save-option-btn">추가</button>
+            </div>
           </td>
         </tr>
 
@@ -325,14 +438,25 @@
             </select>
           </td>
           <td class="qty-col">
-            <input type="number" min="0" value="0" class="qty-input">
+            <div class="qty-wrapper">
+              <input type="number" min="0" value="0" class="qty-input">
+              <button type="button" class="save-option-btn">추가</button>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
 
+    <!-- 임시 저장된 옵션 리스트 -->
+    <div class="saved-options-box" id="savedOptionsBox">
+      <div class="saved-title">임시 저장된 옵션 조합</div>
+      <div class="saved-options-list" id="savedOptionsList">
+        <div class="saved-empty">임시 저장된 옵션이 없습니다. 옵션을 선택하고 [추가] 버튼을 눌러 주세요.</div>
+      </div>
+    </div>
+
     <div class="btn-area">
-      <button id="calcBtn">계산하기</button>
+      <button id="calcBtn" class="calc-btn">계산하기</button>
     </div>
 
     <div id="totalBox" class="total-box">
@@ -353,37 +477,117 @@
       return num.toLocaleString("ko-KR");
     }
 
+    // 옵션 임시 저장 배열
+    const savedOptions = [];
+    let optionIdCounter = 0;
+
+    function renderSavedOptions() {
+      const list = document.getElementById("savedOptionsList");
+      list.innerHTML = "";
+      if (savedOptions.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "saved-empty";
+        empty.textContent = "임시 저장된 옵션이 없습니다. 옵션을 선택하고 [추가] 버튼을 눌러 주세요.";
+        list.appendChild(empty);
+        return;
+      }
+      savedOptions.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "saved-option-row";
+
+        const span = document.createElement("span");
+        span.className = "saved-option-text";
+        span.textContent = `${item.name} (${item.option}) x ${item.qty} = ${formatNumber(item.price * item.qty)}원`;
+
+        const btn = document.createElement("button");
+        btn.className = "delete-option-btn";
+        btn.textContent = "삭제";
+        btn.dataset.id = item.id;
+
+        row.appendChild(span);
+        row.appendChild(btn);
+        list.appendChild(row);
+      });
+    }
+
+    // 삭제 버튼 이벤트(이벤트 위임)
+    document.getElementById("savedOptionsBox").addEventListener("click", function (e) {
+      if (e.target.classList.contains("delete-option-btn")) {
+        const id = e.target.dataset.id;
+        const idx = savedOptions.findIndex(x => x.id === id);
+        if (idx !== -1) {
+          savedOptions.splice(idx, 1);
+          renderSavedOptions();
+        }
+      }
+    });
+
+    // 각 상품 행에 대해 옵션 저장 버튼 연결
+    document.querySelectorAll(".item-row").forEach(function (row) {
+      const optionType = row.dataset.optionType;
+      if (optionType === "none") return; // 옵션 없는 상품은 임시저장 안 씀
+
+      const btn = row.querySelector(".save-option-btn");
+      const qtyInput = row.querySelector(".qty-input");
+      const optionSelect = row.querySelector(".option-select");
+
+      if (!btn || !qtyInput || !optionSelect) return;
+
+      btn.addEventListener("click", function () {
+        const qty = parseInt(qtyInput.value, 10) || 0;
+        if (qty <= 0) {
+          alert("수량을 1 이상 입력해 주세요.");
+          return;
+        }
+        const opt = optionSelect.value;
+        if (!opt) {
+          alert("옵션(멤버/디자인)을 선택해 주세요.");
+          return;
+        }
+        const name = row.dataset.name;
+        const price = Number(row.dataset.price);
+
+        savedOptions.push({
+          id: "opt" + (++optionIdCounter),
+          key: row.dataset.key,
+          name: name,
+          option: opt,
+          qty: qty,
+          price: price
+        });
+
+        // 입력값 초기화
+        qtyInput.value = 0;
+        renderSavedOptions();
+      });
+    });
+
     document.getElementById("calcBtn").addEventListener("click", function () {
       const rows = document.querySelectorAll(".item-row");
       let total = 0;
       let lines = [];
 
+      // 1) 옵션 없는 상품(포카팩, 캔뱃지, 스티커팩, 시리얼볼 등)
       rows.forEach(function (row) {
+        const optionType = row.dataset.optionType;
+        if (optionType !== "none") return; // 옵션 있는 상품은 savedOptions에서 계산
+
         const name = row.dataset.name;
         const price = Number(row.dataset.price);
-        const optionType = row.dataset.optionType;
-
         const qtyInput = row.querySelector(".qty-input");
         const qty = parseInt(qtyInput.value, 10) || 0;
         if (qty <= 0) return;
 
-        let optionText = "";
-        if (optionType !== "none") {
-          const optSelect = row.querySelector(".option-select");
-          const selected = optSelect ? optSelect.value : "";
-          if (selected) {
-            optionText = " (" + selected + ")";
-          } else {
-            optionText = " (옵션 미선택)";
-          }
-        }
-
         const subTotal = price * qty;
         total += subTotal;
+        lines.push(`${name}  x ${qty} = ${formatNumber(subTotal)}원`);
+      });
 
-        lines.push(
-          name + optionText + "  x " + qty + " = " + formatNumber(subTotal) + "원"
-        );
+      // 2) 임시 저장된 옵션 조합들
+      savedOptions.forEach(function (item) {
+        const subTotal = item.price * item.qty;
+        total += subTotal;
+        lines.push(`${item.name} (${item.option})  x ${item.qty} = ${formatNumber(subTotal)}원`);
       });
 
       const totalBox = document.getElementById("totalBox");

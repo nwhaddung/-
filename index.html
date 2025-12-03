@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PLBBUU OFFICIAL MD 계산기</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "맑은 고딕", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(180deg, #ffe6f5 0%, #f6e8ff 40%, #ffeef7 100%);
+      color: #4b3b60;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto 40px;
+      background-color: #fff7ff;
+      border-radius: 16px;
+      box-shadow: 0 8px 18px rgba(200, 150, 220, 0.4);
+      padding: 20px 24px 28px;
+      border: 2px solid #ffbde3;
+    }
+    h1 {
+      text-align: center;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #7b6a9c;
+      margin-bottom: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    th, td {
+      padding: 6px 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #ffe2f4;
+      font-weight: 700;
+      border-bottom: 1px solid #f3c7eb;
+    }
+    tr:nth-child(even) td {
+      background-color: #fffaff;
+    }
+    tr:nth-child(odd) td {
+      background-color: #fff7ff;
+    }
+    .name-col {
+      width: 45%;
+    }
+    .price-col {
+      width: 13%;
+      text-align: right;
+    }
+    .option-col {
+      width: 22%;
+    }
+    .qty-col {
+      width: 12%;
+      text-align: center;
+    }
+    select, input[type="number"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid #d3b8f3;
+      font-size: 11px;
+      background-color: #ffffff;
+    }
+    input[type="number"] {
+      text-align: center;
+    }
+    .btn-area {
+      text-align: center;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+    button {
+      background-color: #ffbde3;
+      color: #4b3b60;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 26px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(255, 130, 190, 0.5);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background-color 0.12s ease;
+    }
+    button:hover {
+      background-color: #ffc9ea;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(255, 130, 190, 0.6);
+    }
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 3px 7px rgba(255, 130, 190, 0.5);
+    }
+    .total-box {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background-color: #ffeaf6;
+      border: 1px solid #f4c8eb;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .detail-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background-color: #fff7ff;
+      border: 1px dashed #e0c8ff;
+      font-size: 11px;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+    .footer {
+      text-align: center;
+      font-size: 10px;
+      color: #8f7fb0;
+      margin-top: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>PLBBUU OFFICIAL MD 계산기</h1>
+    <div class="subtitle">
+      원하는 상품의 옵션과 수량을 입력한 뒤 <b>계산하기</b> 버튼을 눌러 주세요.
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="name-col">상품명</th>
+          <th class="price-col">가격(원)</th>
+          <th class="option-col">옵션 (멤버/디자인)</th>
+          <th class="qty-col">수량</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- 각 행은 data-* 속성으로 정보 보관 -->
+        <tr class="item-row"
+            data-key="photocard_pack"
+            data-name="BBUU PHOTOCARD PACK"
+            data-price="7000"
+            data-option-type="none">
+          <td class="name-col">BBUU PHOTOCARD PACK</td>
+          <td class="price-col">7,000</td>
+          <td class="option-col">-</td>
+          <td class="qty-col">
+            <input type="number" min="0" value="0" class="qty-input">
+          </td>
+        </tr>
+
+        <tr class="item-row"
+            data-key="trading_can_badge"
+            data-name="BBUU TRADING CAN BADGE"
+            data-price="5000"
+            data-option-type="none">
+          <td class="name-col">BBUU TRADING CAN BADGE</td>
+          <td class="price-col">5,000</td>
+          <td class="option-col">-</td>
+          <td class="qty-col">
+            <input type="number" min="0" value="0" class="qty-input">
+          </td>
+        </tr>
+
+        <tr class="item-row"
+            data-key="acrylic_stick_keyring"
+            data-name="BBUU ACRYLIC STICK KEYRING"
+            data-price="19000"
+            data-option-type="member">
+          <td class="name-col">BBUU ACRYLIC STICK KEYRING</td>
+          <td class="price-col">19,000</td>
+          <td class="option-col">
+            <select class="option-select">
+              <option value="">멤버 선택</option>
+              <option value="예준">예준</option>
+              <option value="노아">노아</option>
+              <option value="밤비">밤비</option>
+              <option value="은호">은호</option>
+              <option value="하민">하민</option>
+            </select>
+          </td>
+          <td class="qty-col">
+            <input type="number" min="0" value="0" class="qty-input">
+          </td>
+        </tr>
+
+        <tr class="item-row"
+            data-key="acrylic_charm_keyring"
+            data-name="BBUU ACRYLIC CHARM KEYRING"
+            data-price="7500"
+            data-option-type="member">
+          <td class="name-col">BBUU ACRYLIC CHARM KEYRING</td>
+          <td class="price-col">7,500</td>
+          <td class="option-col">
+            <select class="option-select">
+              <option value="">멤버 선택</option>
+              <option value="예준">예준</option>
+              <option value="노아">노아</option>
+              <option value="밤비">밤비</option>
+              <option value="은호">은호</option>
+              <option value="하민">하민</option>
+            </select>
+          </td>
+          <td class="qty-col">
+            <input type="number" min="0" value="0" class="qty-input">
+          </td>
+        </tr>
+
+        <tr class="item-row"
+            data-key="photocard_stand"
+            data-name="BBUU TURN-AROUND ACRYLIC PHOTOCARD STAND"
+            data-price="25000"
+            data-option-type="member">
+          <td class="name-col">BBUU TURN-AROUND ACRYLIC PHOTOCARD STAND</td>
+          <td class="price-col">25,000</td>
+          <td class="option-col">
+            <select class="option-select">
+              <option value="">멤버 선택</option>
+              <option value="예준">예준</option>
+              <option value="노아">노아</option>
+              <option value="밤비">밤비</option>
+              <option value="은호">은호</option>
+              <option value="하민">하민</option>
+            </select>
+          </td>
+          <td class="qty-col">
+            <input type="number" min="0" value="0" class="qty-input">
+          </td>
+        </tr>
+
+        <tr class="item-row"
+            data-key="sticker_pack"
+            data-name="BBUU STICKER PACK"
+            data-price="13000"
+            data-option-type="none">
+          <td class="name-col">BBUU STICKER PACK</td>
+          <td class="price-col">13,000</td>
+          <td class="option-col">-</td>
+          <td class="qty-col">
+            <input type="number" min="0" value="0" class="qty-input">
+          </td>
+        </tr>
+
+        <tr class="item-row"
+            data-key="cereal_bowl"
+            data-name="BBUU CEREAL BOWL"
+            data-price="22000"
+            data-option-type="none">
+          <td class="name-col">BBUU CEREAL BOWL</td>
+          <td class="price-col">22,000</td>
+          <td class="option-col">-</td>
+          <td class="qty-col">
+            <input type="number" min="0" value="0" class="qty-input">
+          </td>
+        </tr>
+
+        <tr class="item-row"
+            data-key="fur_binder"
+            data-name="BBUU FUR BINDER"
+            data-price="25000"
+            data-option-type="binder">
+          <td class="name-col">BBUU FUR BINDER</td>
+          <td class="price-col">25,000</td>
+          <td class="option-col">
+            <select class="option-select">
+              <option value="">디자인 선택</option>
+              <option value="Dreamhouse">Dreamhouse</option>
+              <option value="Teacup">Teacup</option>
+            </select>
+          </td>
+          <td class="qty-col">
+            <input type="number" min="0" value="0" class="qty-input">
+          </td>
+        </tr>
+
+        <tr class="item-row"
+            data-key="trading_mini_keyring"
+            data-name="BBUU TRADING MINIATURE KEYRING"
+            data-price="6000"
+            data-option-type="member">
+          <td class="name-col">BBUU TRADING MINIATURE KEYRING</td>
+          <td class="price-col">6,000</td>
+          <td class="option-col">
+            <select class="option-select">
+              <option value="">멤버 선택</option>
+              <option value="예준">예준</option>
+              <option value="노아">노아</option>
+              <option value="밤비">밤비</option>
+              <option value="은호">은호</option>
+              <option value="하민">하민</option>
+            </select>
+          </td>
+          <td class="qty-col">
+            <input type="number" min="0" value="0" class="qty-input">
+          </td>
+        </tr>
+
+        <tr class="item-row"
+            data-key="face_cushion"
+            data-name="BBUU FACE CUSHION"
+            data-price="25000"
+            data-option-type="member">
+          <td class="name-col">BBUU FACE CUSHION</td>
+          <td class="price-col">25,000</td>
+          <td class="option-col">
+            <select class="option-select">
+              <option value="">멤버 선택</option>
+              <option value="예준">예준</option>
+              <option value="노아">노아</option>
+              <option value="밤비">밤비</option>
+              <option value="은호">은호</option>
+              <option value="하민">하민</option>
+            </select>
+          </td>
+          <td class="qty-col">
+            <input type="number" min="0" value="0" class="qty-input">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="btn-area">
+      <button id="calcBtn">계산하기</button>
+    </div>
+
+    <div id="totalBox" class="total-box">
+      총 금액: 0원
+    </div>
+
+    <div id="detailBox" class="detail-box">
+      선택된 상품이 없습니다.
+    </div>
+
+    <div class="footer">
+      * 이 페이지는 비공식 팬 제작 계산기입니다. 실제 주문은 공식 스토어 정보를 반드시 확인하세요.
+    </div>
+  </div>
+
+  <script>
+    function formatNumber(num) {
+      return num.toLocaleString("ko-KR");
+    }
+
+    document.getElementById("calcBtn").addEventListener("click", function () {
+      const rows = document.querySelectorAll(".item-row");
+      let total = 0;
+      let lines = [];
+
+      rows.forEach(function (row) {
+        const name = row.dataset.name;
+        const price = Number(row.dataset.price);
+        const optionType = row.dataset.optionType;
+
+        const qtyInput = row.querySelector(".qty-input");
+        const qty = parseInt(qtyInput.value, 10) || 0;
+        if (qty <= 0) return;
+
+        let optionText = "";
+        if (optionType !== "none") {
+          const optSelect = row.querySelector(".option-select");
+          const selected = optSelect ? optSelect.value : "";
+          if (selected) {
+            optionText = " (" + selected + ")";
+          } else {
+            optionText = " (옵션 미선택)";
+          }
+        }
+
+        const subTotal = price * qty;
+        total += subTotal;
+
+        lines.push(
+          name + optionText + "  x " + qty + " = " + formatNumber(subTotal) + "원"
+        );
+      });
+
+      const totalBox = document.getElementById("totalBox");
+      const detailBox = document.getElementById("detailBox");
+
+      totalBox.textContent = "총 금액: " + formatNumber(total) + "원";
+
+      if (lines.length === 0) {
+        detailBox.textContent = "선택된 상품이 없습니다.";
+      } else {
+        detailBox.textContent = lines.join("\n");
+      }
+    });
+  </script>
+</body>
+</html>
